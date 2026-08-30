@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     private final StudentService studentService;
-    //do wyciagania danych z bazy sluzy get
 
     @GetMapping
     public String findAll(Model model) {
@@ -39,20 +38,28 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    @GetMapping("/{id}/edit}")
-    public String editForm(@PathVariable id studenta i Model model) {
-        musimy wczytac studenta po id z bazy
-                dodac studenta do html
-                dodac wszystkie jezyki do html bo moze chciec edytowac jezyk tak jak przy dodawniu
-                i pozniej otworzyc formularz html
-        return "students/register";
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        Student student = studentService.findById(id);
+        model.addAttribute("student", student);
+        model.addAttribute("languages", Language.values());
+        return "students/edit";
     }
 
-    @PostMapping("/{id}/edit}")
-    public String update(@PathVariable id studenta ktorego edytujesz i  Student student czyli jak ma wygladac po edycji) {
+    @PostMapping("/{id}/edit")
+    public String update(@PathVariable Long id, Student student) {
         student.setId(id);
-        tu zapiszemy tego studenta
-                poczytaj dlaczego musimy ustawic id i jak sie zachowac wtedty save()
+        studentService.save(student);
         return "redirect:/students";
     }
+    //tutaj setId jest dlatego, ze z formularza html dostajemy info imie nazwisko i jezyk
+    // i data binding to łaczy a setId to taka dodatkowa informacja, ktora mowi ze to wszystko sie dzieje dla juz istniejacego studenta
+    // z pathvariable bo bez setId databinding by zrobil obiekt javowy z id null i wtedy by ten save mogl by byc zrozumiany inaczej
+    // traktowany jako nowy a tak nie jest traktowany jako nowy tylko te dane trafiaja/ updatuja sie do juz istniejacego obiektu
+    // czyli w skrocie formularz - nowe dane
+    // pathVariable info kogo edytujemy
+    // setId jest łacznikiem tych informacji
+    // save nadpisuje
+
+
 }
