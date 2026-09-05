@@ -1,10 +1,9 @@
-package com.example.firstApp.teacher.model;
+package com.example.firstapp.student.model;
 
-import com.example.firstApp.common.Language;
+import com.example.firstapp.common.Language;
+import com.example.firstapp.teacher.model.Teacher;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @Getter
@@ -12,19 +11,22 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Teacher {
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
-    @ElementCollection
     @Enumerated(EnumType.STRING)
-    private Set<Language> language;
+    private Language language;
+    @ManyToOne
+    private Teacher teacher;
 
     @Override
     public String toString() {
         return firstName + " " + lastName;
     }
+
+
 }

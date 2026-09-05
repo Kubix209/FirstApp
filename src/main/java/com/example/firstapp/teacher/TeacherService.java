@@ -1,7 +1,8 @@
-package com.example.firstApp.teacher;
+package com.example.firstapp.teacher;
 
-import com.example.firstApp.teacher.model.Teacher;
+import com.example.firstapp.teacher.model.Teacher;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public class TeacherService {
         teacherRepository.deleteById(id);
     }
 
+    public  List<Teacher> getAll() {
+        return teacherRepository.findAll();
+    }
 }
