@@ -1,4 +1,4 @@
-package com.example.firstApp.teacher;
+package com.example.firstapp.teacher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,8 @@ public class TeacherController {
         teacherService.deleteById(id);
         return "redirect:/teachers";
     }
+
+    //zrob analogicznie teachera jak studenta doslownie wszystkie metody
 
 
 }

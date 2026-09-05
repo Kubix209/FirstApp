@@ -1,4 +1,4 @@
-package com.example.firstApp.common;
+package com.example.firstapp.common;
 
 public enum Language {
 

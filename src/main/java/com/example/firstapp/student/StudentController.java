@@ -1,7 +1,8 @@
-package com.example.firstApp.student;
+package com.example.firstapp.student;
 
-import com.example.firstApp.common.Language;
-import com.example.firstApp.student.model.Student;
+import com.example.firstapp.common.Language;
+import com.example.firstapp.student.model.Student;
+import com.example.firstapp.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     private final StudentService studentService;
+    private final TeacherService teacherService;
 
     @GetMapping
     public String findAll(Model model) {
@@ -29,14 +31,17 @@ public class StudentController {
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("languages", Language.values());
+        model.addAttribute("teachers", teacherService.getAll());
         return "students/register";
     }
 
     @PostMapping("/create")
-    public String save(Student student) {
-        studentService.save(student);
+    public String save(Student student, @RequestParam Long teacherId) {
+        studentService.save(student, teacherId);
         return "redirect:/students";
     }
+
+    //requestparam requestbody
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
@@ -46,12 +51,18 @@ public class StudentController {
         return "students/edit";
     }
 
-    @PostMapping("/{id}/edit")
-    public String update(@PathVariable Long id, Student student) {
-        student.setId(id);
-        studentService.save(student);
-        return "redirect:/students";
-    }
+//    @PostMapping("/{id}/edit")
+//    public String update(@PathVariable Long id, Student student) {
+//        student.setId(id);
+//        studentService.save(student);
+//        return "redirect:/students";
+//    }
+
+
+
+
+
+
     //tutaj setId jest dlatego, ze z formularza html dostajemy info imie nazwisko i jezyk
     // i data binding to łaczy a setId to taka dodatkowa informacja, ktora mowi ze to wszystko sie dzieje dla juz istniejacego studenta
     // z pathvariable bo bez setId databinding by zrobil obiekt javowy z id null i wtedy by ten save mogl by byc zrozumiany inaczej
