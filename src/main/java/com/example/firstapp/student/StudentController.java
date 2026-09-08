@@ -23,9 +23,9 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteById(@PathVariable Long id) {
+    @ResponseBody
+    public void deleteById(@PathVariable Long id) {
         studentService.deleteById(id);
-        return "redirect:/students";
     }
 
     @GetMapping("/create")
