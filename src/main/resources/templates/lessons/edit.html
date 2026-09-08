@@ -1,0 +1,42 @@
+<form xmlns:th="http://www.thymeleaf.org"
+      th:action="@{/lessons/{id}/edit(id=${lesson.id})}"
+      method="post">
+
+  <div class="form-group">
+    <label for="studentId">Student:</label>
+    <select id="studentId" name="studentId" required>
+      <option value="">-- Wybierz studenta --</option>
+      <option th:each="student : ${students}"
+              th:value="${student.id}"
+              th:text="${student.firstName + ' ' + student.lastName}"
+              th:selected="${lesson.student != null and student.id == lesson.student.id}">
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="teacherId">Nauczyciel:</label>
+    <select id="teacherId" name="teacherId" required>
+      <option value="">-- Wybierz nauczyciela --</option>
+      <option th:each="teacher : ${teachers}"
+              th:value="${teacher.id}"
+              th:text="${teacher.firstName + ' ' + teacher.lastName}"
+              th:selected="${lesson.teacher != null and teacher.id == lesson.teacher.id}">
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="dateTime">Data i godzina:</label>
+    <input type="datetime-local"
+           id="dateTime"
+           name="dateTime"
+           th:value="${lesson.dateTime != null
+                   ? #temporals.format(lesson.dateTime, 'yyyy-MM-dd''T''HH:mm')
+                   : ''}"
+           required>
+  </div>
+
+  <button type="submit" class="btn">💾 Zapisz zmiany</button>
+  <a href="/lessons" style="margin-left:10px;">Anuluj</a>
+</form>

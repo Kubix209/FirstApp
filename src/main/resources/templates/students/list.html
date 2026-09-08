@@ -37,14 +37,38 @@
             background-color: #f5f5f5;
         }
 
-        .delete-btn {
-            background-color: #f44336;
+        .add-btn, .edit-btn, .delete-btn {
+            display: inline-block;
             color: white;
             padding: 8px 16px;
             border: none;
             border-radius: 4px;
             font-size: 14px;
+            font-family: inherit;
+            text-decoration: none;
             cursor: pointer;
+        }
+
+        .add-btn {
+            background-color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .add-btn:hover {
+            background-color: #388E3C;
+        }
+
+        .edit-btn {
+            background-color: #2196F3;
+            margin-right: 8px;
+        }
+
+        .edit-btn:hover {
+            background-color: #1976D2;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
         }
 
         .delete-btn:hover {
@@ -69,9 +93,14 @@
 <div class="nav">
     <a href="/students">📚 Studenci</a>
     <a href="/teachers">👨‍🏫 Nauczyciele</a>
+    <a href="/lessons">📅 Lekcje</a>
 </div>
 
 <h1>📚 Lista Studentów</h1>
+
+<a class="add-btn" th:href="@{/students/create}">
+    ➕ Dodaj studenta
+</a>
 
 <table>
     <thead>
@@ -92,7 +121,12 @@
         <td th:text="${student.language}"></td>
 
         <td>
-            <button class="delete-btn"
+            <a class="edit-btn"
+               th:href="@{/students/{id}/edit(id=${student.id})}">
+                Edytuj
+            </a>
+
+            <button type="button" class="delete-btn"
                     th:onclick="'deleteStudent(' + ${student.id} + ')'">
                 Usuń
             </button>
@@ -103,11 +137,20 @@
 
 <script>
     async function deleteStudent(id) {
-        await fetch('/students/' + id, {
-            method: 'DELETE'
-        });
+        try {
+            const response = await fetch('/students/' + id, {
+                method: 'DELETE'
+            });
 
-        window.location.href = '/students';
+            if (!response.ok) {
+                alert('Nie udało się usunąć studenta.');
+                return;
+            }
+
+            window.location.href = '/students';
+        } catch (error) {
+            alert('Błąd połączenia z serwerem. Sprawdź listę przed ponowieniem usuwania.');
+        }
     }
 </script>
 

@@ -2,11 +2,13 @@ package com.example.firstapp.lesson.model;
 
 import com.example.firstapp.student.model.Student;
 import com.example.firstapp.teacher.model.Teacher;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,16 +16,20 @@ import java.util.List;
 @Builder
 public class Lesson {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
     private Teacher teacher;
-    private List<Student> students;
+    @ManyToOne
+    private Student student;
     private LocalDateTime dateTime;
 
     @Override
     public String toString() {
         return "Lesson id: " + id + "\n" +
                 "Teacher: " + teacher + "\n" +
-                "Students: " + students + "\n" +
+                "Students: " + student + "\n" +
                 "Date: " + dateTime;
     }
 

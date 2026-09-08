@@ -1,19 +1,39 @@
 <form th:action="@{/students/{id}/edit(id=${student.id})}" method="post">
     <div class="form-group">
         <label for="firstName">Imię:</label>
-        <input type="text" id="firstName" name="firstName" th:value="${student.firstName}" required>
+        <input type="text" id="firstName" name="firstName"
+               th:value="${student.firstName}" required>
     </div>
+
     <div class="form-group">
         <label for="lastName">Nazwisko:</label>
-        <input type="text" id="lastName" name="lastName" th:value="${student.lastName}" required>
+        <input type="text" id="lastName" name="lastName"
+               th:value="${student.lastName}" required>
     </div>
+
     <div class="form-group">
         <label for="language">Język programowania:</label>
         <select id="language" name="language" required>
-            <option th:each="lang : ${languages}" th:value="${lang}" th:text="${lang}"
-                    th:selected="${lang == student.language}"></option>
+            <option th:each="lang : ${languages}"
+                    th:value="${lang}"
+                    th:text="${lang}"
+                    th:selected="${lang == student.language}">
+            </option>
         </select>
     </div>
+
+    <div class="form-group">
+        <label for="teacherId">Nauczyciel:</label>
+        <select id="teacherId" name="teacherId" required>
+            <option value="">-- Wybierz nauczyciela --</option>
+            <option th:each="teacher : ${teachers}"
+                    th:value="${teacher.id}"
+                    th:text="${teacher.firstName + ' ' + teacher.lastName + ' ' + teacher.languages}"
+                    th:selected="${student.teacher != null and teacher.id == student.teacher.id}">
+            </option>
+        </select>
+    </div>
+
     <button type="submit" class="btn">💾 Zapisz zmiany</button>
     <a href="/students" style="margin-left:10px;">Anuluj</a>
 </form>

@@ -1,0 +1,29 @@
+<form th:action="@{/teachers/{id}/edit(id=${teacher.id})}" method="post">
+  <div class="form-group">
+    <label for="firstName">Imię:</label>
+    <input type="text" id="firstName" name="firstName"
+           th:value="${teacher.firstName}" required>
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Nazwisko:</label>
+    <input type="text" id="lastName" name="lastName"
+           th:value="${teacher.lastName}" required>
+  </div>
+
+  <fieldset class="form-group">
+    <legend>Języki programowania:</legend>
+
+    <label th:each="lang : ${languages}"
+           style="display: block; font-weight: normal;">
+      <input type="checkbox" name="languages"
+             th:value="${lang}"
+             th:checked="${teacher.languages != null and teacher.languages.contains(lang)}"
+             style="width: auto;">
+      <span th:text="${lang}"></span>
+    </label>
+  </fieldset>
+
+  <button type="submit" class="btn">💾 Zapisz zmiany</button>
+  <a href="/teachers" style="margin-left:10px;">Anuluj</a>
+</form>

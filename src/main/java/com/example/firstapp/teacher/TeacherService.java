@@ -21,7 +21,11 @@ public class TeacherService {
         teacherRepository.deleteById(id);
     }
 
-    public  List<Teacher> getAll() {
-        return teacherRepository.findAll();
+    public void save(Teacher teacher) {
+        teacherRepository.save(teacher);
+    }
+
+    public Teacher findById(Long id) {
+        return teacherRepository.findById(id).orElseThrow(() -> new RuntimeException("teacher with Id " + id + " not found"));
     }
 }
