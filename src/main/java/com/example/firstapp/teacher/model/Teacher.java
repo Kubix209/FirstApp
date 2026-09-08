@@ -33,6 +33,4 @@ public class Teacher {
         return firstName + " " + lastName;
     }
 
-    //html register mozliwosc wyboru jezykow na zasadzie checkboxa
-
 }

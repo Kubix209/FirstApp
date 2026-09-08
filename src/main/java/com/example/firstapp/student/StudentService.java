@@ -24,13 +24,13 @@ public class StudentService {
     }
 
     public void save(Student student, Long teacherId) {
-        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(() -> new RuntimeException("teacher with Id : " + teacherId + " not found"));
+        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(() -> new RuntimeException("teacher with Id " + teacherId + " not found"));
         student.setTeacher(teacher);
         studentRepository.save(student);
     }
 
     public Student findById(Long id) {
-        return studentRepository.findById(id).orElseThrow();
+        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("student with Id " + id + " not found"));
     }
 
 

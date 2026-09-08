@@ -1,12 +1,11 @@
 package com.example.firstapp.teacher;
 
+import com.example.firstapp.common.Language;
+import com.example.firstapp.teacher.model.Teacher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/teachers")
@@ -27,7 +26,31 @@ public class TeacherController {
         return "redirect:/teachers";
     }
 
-    //zrob analogicznie teachera jak studenta doslownie wszystkie metody
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("languages", Language.values());
+        return "teachers/register";
+    }
 
+    @PostMapping("/create")
+    public String save(Teacher teacher) {
+        teacherService.save(teacher);
+        return "redirect:/teachers";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        Teacher teacher = teacherService.findById(id);
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("languages", Language.values());
+        return "teachers/edit";
+    }
+
+    @PostMapping("/{id}/edit")
+    public String update(@PathVariable Long id, Teacher teacher) {
+        teacher.setId(id);
+        teacherService.save(teacher);
+        return "redirect:/teachers";
+    }
 
 }

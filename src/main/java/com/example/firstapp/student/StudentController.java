@@ -31,7 +31,7 @@ public class StudentController {
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("languages", Language.values());
-        model.addAttribute("teachers", teacherService.getAll());
+        model.addAttribute("teachers", teacherService.findAll());
         return "students/register";
     }
 
@@ -48,29 +48,15 @@ public class StudentController {
         Student student = studentService.findById(id);
         model.addAttribute("student", student);
         model.addAttribute("languages", Language.values());
+        model.addAttribute("teachers", teacherService.findAll());
         return "students/edit";
     }
 
-//    @PostMapping("/{id}/edit")
-//    public String update(@PathVariable Long id, Student student) {
-//        student.setId(id);
-//        studentService.save(student);
-//        return "redirect:/students";
-//    }
-
-
-
-
-
-
-    //tutaj setId jest dlatego, ze z formularza html dostajemy info imie nazwisko i jezyk
-    // i data binding to łaczy a setId to taka dodatkowa informacja, ktora mowi ze to wszystko sie dzieje dla juz istniejacego studenta
-    // z pathvariable bo bez setId databinding by zrobil obiekt javowy z id null i wtedy by ten save mogl by byc zrozumiany inaczej
-    // traktowany jako nowy a tak nie jest traktowany jako nowy tylko te dane trafiaja/ updatuja sie do juz istniejacego obiektu
-    // czyli w skrocie formularz - nowe dane
-    // pathVariable info kogo edytujemy
-    // setId jest łacznikiem tych informacji
-    // save nadpisuje
-
+    @PostMapping("/{id}/edit")
+    public String update(@PathVariable Long id, Student student, @RequestParam Long teacherId) {
+        student.setId(id);
+        studentService.save(student, teacherId);
+        return "redirect:/students";
+    }
 
 }

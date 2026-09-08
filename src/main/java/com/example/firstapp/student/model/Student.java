@@ -1,9 +1,12 @@
 package com.example.firstapp.student.model;
 
 import com.example.firstapp.common.Language;
+import com.example.firstapp.lesson.model.Lesson;
 import com.example.firstapp.teacher.model.Teacher;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,11 +25,12 @@ public class Student {
     private Language language;
     @ManyToOne
     private Teacher teacher;
+    @OneToMany(mappedBy = "student")
+    private Set<Lesson> lessons;
 
     @Override
     public String toString() {
         return firstName + " " + lastName;
     }
-
 
 }
