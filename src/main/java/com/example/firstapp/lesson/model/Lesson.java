@@ -33,5 +33,4 @@ public class Lesson {
                 "Date: " + dateTime;
     }
 
-    // rozwin tak samo jak student i teacher w sensie relacje
 }

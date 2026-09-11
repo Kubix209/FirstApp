@@ -41,8 +41,6 @@ public class StudentController {
         return "redirect:/students";
     }
 
-    //requestparam requestbody
-
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
         Student student = studentService.findById(id);
