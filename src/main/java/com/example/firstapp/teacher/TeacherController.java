@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/teachers")
 @RequiredArgsConstructor
@@ -51,6 +53,12 @@ public class TeacherController {
         teacher.setId(id);
         teacherService.save(teacher);
         return "redirect:/teachers";
+    }
+
+    @GetMapping(params = "language")
+    @ResponseBody
+    public List<Teacher> findByLanguage(@RequestParam Language language) {
+        return teacherService.findAllByLanguage(language);
     }
 
 }

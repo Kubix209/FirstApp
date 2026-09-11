@@ -1,5 +1,6 @@
 package com.example.firstapp.teacher;
 
+import com.example.firstapp.common.Language;
 import com.example.firstapp.teacher.model.Teacher;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
@@ -27,5 +28,9 @@ public class TeacherService {
 
     public Teacher findById(Long id) {
         return teacherRepository.findById(id).orElseThrow(() -> new RuntimeException("teacher with Id " + id + " not found"));
+    }
+
+    public List<Teacher> findAllByLanguage(Language language) {
+       return teacherRepository.findAllByLanguagesContaining(language);
     }
 }

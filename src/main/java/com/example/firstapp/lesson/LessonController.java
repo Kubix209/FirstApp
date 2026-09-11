@@ -2,6 +2,7 @@ package com.example.firstapp.lesson;
 
 import com.example.firstapp.lesson.model.Lesson;
 import com.example.firstapp.student.StudentService;
+import com.example.firstapp.student.model.Student;
 import com.example.firstapp.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,13 +33,12 @@ public class LessonController {
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("students", studentService.findAll());
-        model.addAttribute("teachers", teacherService.findAll());
         return "lessons/register";
     }
 
     @PostMapping("/create")
     public String save(Lesson lesson, @RequestParam Long studentId, @RequestParam Long teacherId) {
-        lessonService.save(lesson,studentId, teacherId);
+        lessonService.save(lesson, studentId, teacherId);
         return "redirect:/lessons";
     }
 
